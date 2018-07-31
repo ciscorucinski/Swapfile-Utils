@@ -37,10 +37,11 @@ while true; do
 	esac
 done
 
-if "$show_help" ; then
-	echo "$help_text"; exit 0
-elif "$argument_error" ; then
+if "$argument_error" ; then
 	echo "$error_message"; exit 0
+elif "$show_help" ; then
+	echo "$help_text"; exit 0
+
 fi
 
 retry=true
