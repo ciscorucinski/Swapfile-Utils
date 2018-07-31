@@ -20,7 +20,7 @@ line="# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 shopt -s extglob
 
 case $1 in
-	?(-)@(-h|-help) )
+	-h|--help )
 		echo -e "$help_text"
 		exit 0
 		;;
