@@ -19,12 +19,29 @@ line="# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 shopt -s extglob
 
-case $1 in
-	-h|--help )
-		echo -e "$help_text"
-		exit 0
-		;;
-esac
+show_help=false
+argument_error=false
+error_message=
+
+while true; do
+	case "$1" in
+		-h | --help ) 
+			show_help=true; 
+			shift ;;
+		-- ) shift; break ;;
+		?* ) 
+			argument_error=true
+			error_message="Invalid argument: $1" 
+			shift; break ;;
+		*) break ;;
+	esac
+done
+
+if "$show_help" ; then
+	echo "$help_text"; exit 0
+elif "$argument_error" ; then
+	echo "$error_message"; exit 0
+fi
 
 retry=true
 while $retry; do
