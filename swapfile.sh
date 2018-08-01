@@ -205,7 +205,6 @@ case "$yes_no" in
 			case "$yes_no" in
 				[Yy]|[Yy][Ee][Ss] )
 					
-					lenght=${#swap_name}
 					echo -e ""
 					echo -e "$line"
 					cat /etc/fstab 
