@@ -1,13 +1,62 @@
 #!/bin/bash
 
-help_text="
-Documentation:
+help_text="Documentation:
+Creates a new swapfile
 
-    Usage: $(basename "$0") [-h]
-    Creates a new permanent swapfile
+Usage: 
+  $(basename "$0") [OPTIONS]
 
-    where:
-        -h  displays help text"
+Help Options:
+  -h, --help		Display help message
+
+Application Options:
+  -n, --name		[Unimplemented] Set the name of the swapfile. (Default: '/swapfile')
+			
+			Format: [/][Name]
+			 - / 		Optional
+			 - Name:	Required. Alphanumeric name + (Special: '_' and '-').
+
+			Examples:
+			 - 'swapfile' for the name '/swapfile'.
+			 - '/swapfile' for the name '/swapfile'	
+			 - '/swapfile_ext' for the name '/swapfile_ext'
+
+  -s, --size		[Unimplemented] Set the size of the swapfile, in bytes. 
+
+			Format: [Number][Unit]
+			 - Number: 	Required: Any positive integer greater than zero (0)
+			 - Unit:	Required: Standard byte multiplicative suffix.
+
+				* M, m		Megabytes [1000 * 1000]
+				* G, g		Gigabytes [1000 * 1000 * 1000]
+				
+				[Unimplemented]	
+				* T, t		Terabytes [1000 * 1000 * 1000 * 1000]
+				* MiB, mib	Mebibytes [1024 * 1024]
+				* GiB, gib	Gigibytes [1024 * 1024 * 1024]
+				* TiB, tib	Teribytes [1024 * 1024 * 1024 * 1024]
+				
+
+			Examples:
+			 - '512M' for 512 megabytes	[512,000,000 bytes]
+			 - '1G' for 1 gigabyte
+
+  -p, --permanent	[Unimplemented] Creates a permanent swapfile on the system.
+
+
+Future Work:
+  - Allow non-interactive script mode
+  - Move everything to functions
+  - Implement Swappiness
+  - Allow single / batch swapfile removal
+  - Allow easy debugging / testing support
+  - Add color and bold support
+  - Split up swapfile.sh into different parts. Help file, functions, CLI interactor
+  - Split up Help (simple, format, examples)
+"
+			
+
+
 
 ask_for_size_allocation="
 >>>> Amount to allocate for new swapfile? (default: 4G) : "
