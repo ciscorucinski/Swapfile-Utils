@@ -221,5 +221,3 @@ case "$yes_no" in
 		;;
 esac
 
-shopt -u extglob
-
