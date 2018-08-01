@@ -200,7 +200,7 @@ case "$yes_no" in
 		echo -e ">> 4. Created permanent swapfile. Modified '/etc/fstab'"
 
 		echo -e -n ">>>> Do you want to view '/etc/fstab?' (Y / N):"
-			read "$yes_no"
+			read yes_no
 
 			case "$yes_no" in
 				[Yy]|[Yy][Ee][Ss] )
