@@ -94,10 +94,10 @@ elif "$show_help" ; then
 fi
 
 retry=true
-while $retry; do
+while "$retry"; do
 	echo -e -n ">>>> Are you sure you want to create a new swapfile? (Y / N):"
 	read yes_no
-	case $yes_no in
+	case "$yes_no" in
 		[Yy]|[Yy][Ee][Ss] )
 
 			echo -e "\n$line"
@@ -118,14 +118,14 @@ done
 
 echo -e ""
 echo -e ">> Step 1: Size Allocation"
-echo -e -n $ask_for_size_allocation
+echo -e -n "$ask_for_size_allocation"
 read swap_size
 
 if [ -z "${swap_size}" ]; then
 	swap_size="4G"
-elif [[ $swap_size =~ [1-9][0-9]*[mMgG] ]]; then
+elif [[ "$swap_size" =~ [1-9][0-9]*[mMgG] ]]; then
 	:
-elif [[ $swap_size =~ [Qq][Uu][Ii][Tt] ]]; then
+elif [[ "$swap_size" =~ [Qq][Uu][Ii][Tt] ]]; then
 	echo -e ">> Exiting..."
 	exit 0
 else
@@ -135,17 +135,17 @@ fi
 
 echo -e ""
 echo -e ">> Step 2: File Name"
-echo -e -n $ask_for_swapfile_name
+echo -e -n "$ask_for_swapfile_name"
 read swap_name
 
 if [ -z "${swap_name}" ]; then
 	swap_name="/swapfile"
-elif [[ $swap_size =~ [Qq][Uu][Ii][Tt] ]]; then
+elif [[ "$swap_size" =~ [Qq][Uu][Ii][Tt] ]]; then
 	echo -e ">> Exiting..."
 	exit 0
-elif [[ $swap_name =~ [/]+([0-9a-zA-Z]|[_-]) ]]; then
+elif [[ "$swap_name" =~ [/]+([0-9a-zA-Z]|[_-]) ]]; then
 	:
-elif [[ $swap_name =~ [+([0-9a-zA-Z]|[_-])] ]]; then 
+elif [[ "$swap_name" =~ [+([0-9a-zA-Z]|[_-])] ]]; then 
 	swap_name="/$swap_name"	
 else
 	echo -e ">> Invalid Pattern: $swap_name. Exiting..."
@@ -155,7 +155,7 @@ fi
 echo -e ""
 echo -e -n ">>>> Continue? '$swap_name' (${swap_size^^}) will be created. (Y / N):"
 read yes_no
-case $yes_no in
+case "$yes_no" in
 	[Yy]|[Yy][Ee][Ss] )
 		echo -e""
 		echo -e ">> 1. Creating swapfile..."
@@ -163,15 +163,15 @@ case $yes_no in
 		echo -e ""
 		echo -e "$line"
 
-		sudo fallocate -l $swap_size $swap_name
-		sudo chmod 600 $swap_name
-		sudo mkswap $swap_name
+		sudo fallocate -l "$swap_size" "$swap_name"
+		sudo chmod 600 "$swap_name"
+		sudo mkswap "$swap_name"
 		
 		echo -e "$line"
 		echo -e ""
 
 		echo -e ">> 2. Enabling swapfile..."
-		sudo swapon $swap_name
+		sudo swapon "$swap_name"
 
 		echo -e ">> 3. Swapfile added."
 		echo -e ""
@@ -191,7 +191,7 @@ esac
 echo -e -n ">>>> Make swapfile permanent? (Y / N):"
 read yes_no
 
-case $yes_no in
+case "$yes_no" in
 	[Yy]|[Yy][Ee][Ss] )
 
 		echo -e "$swap_name none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
@@ -200,9 +200,9 @@ case $yes_no in
 		echo -e ">> 4. Created permanent swapfile. Modified '/etc/fstab'"
 
 		echo -e -n ">>>> Do you want to view '/etc/fstab?' (Y / N):"
-			read yes_no
+			read "$yes_no"
 
-			case $yes_no in
+			case "$yes_no" in
 				[Yy]|[Yy][Ee][Ss] )
 					
 					lenght=${#swap_name}
