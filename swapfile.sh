@@ -67,6 +67,7 @@ ask_for_swapfile_name="
 line="# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
 
 shopt -s extglob
+shopt -s nocasematch
 
 show_help=false
 argument_error=false
@@ -97,7 +98,7 @@ retry=true
 while "$retry"; do
 	read -r -p ">>>> Are you sure you want to create a new swapfile? (Y / N):" yes_no 
 	case "$yes_no" in
-		[Yy]|[Yy][Ee][Ss] )
+		y | yes )
 
 			echo -e "\n$line"
 			echo -e "Current Swapfiles:\n"
@@ -105,7 +106,7 @@ while "$retry"; do
 			echo -e "$line"
 			retry=false
 			;;
-		[Nn]|[Nn][Oo]|[Qq][Uu][Ii][Tt] )
+		n | no | quit )
 			echo -e ">> Exiting..."
 			exit 0
 			;;
@@ -152,7 +153,7 @@ fi
 echo -e ""
 read -r -p ">>>> Continue? '$swap_name' (${swap_size^^}) will be created. (Y / N):" yes_no
 case "$yes_no" in
-	[Yy]|[Yy][Ee][Ss] )
+	y | yes )
 		echo -e""
 		echo -e ">> 1. Creating swapfile..."
 		
@@ -178,7 +179,7 @@ case "$yes_no" in
 		echo -e "$line"
 		echo -e ""
 		;;
-	[Qq][Uu][Ii][Tt]|[Nn]|[Nn][Oo]|[*])
+	n | no | quit | * )
 		echo -e ">> Exiting..."
 		exit 0
 		;;
@@ -187,7 +188,7 @@ esac
 read -r -p ">>>> Make swapfile permanent? (Y / N):" yes_no
 
 case "$yes_no" in
-	[Yy]|[Yy][Ee][Ss] )
+	y | yes )
 
 		echo -e "$swap_name none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
 
@@ -197,24 +198,24 @@ case "$yes_no" in
 		read -r -p ">>>> Do you want to view '/etc/fstab?' (Y / N):" yes_no
 
 		case "$yes_no" in
-			[Yy]|[Yy][Ee][Ss] )
+			y | yes )
 				
 				echo -e ""
 				echo -e "$line"
 				cat /etc/fstab 
 				echo -e "$line"
 				;;
-			*)
+			* )
 				echo -e ">> Exiting..."
 				exit 0
 				;;
 		esac
 		;;
-	[Qq][Uu][Ii][Tt] )
+	quit )
 		echo -e ">> Exiting..."
 		exit 0	
 		;;
-	*)
+	n | no | * )
 		echo -e ">> 4. Created temp swapfile."
 		echo -e ">> Exiting..."
 		exit 0
