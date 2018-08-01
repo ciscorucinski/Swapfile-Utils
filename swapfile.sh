@@ -107,6 +107,7 @@ while "$retry"; do
 			retry=false
 			;;
 		n | no | quit )
+			echo -e ""
 			echo -e ">> Exiting..."
 			exit 0
 			;;
@@ -125,10 +126,13 @@ if [ -z "${swap_size}" ]; then
 elif [[ "$swap_size" =~ [1-9][0-9]*[mMgG] ]]; then
 	:
 elif [[ "$swap_size" =~ [Qq][Uu][Ii][Tt] ]]; then
+	echo -e ""
 	echo -e ">> Exiting..."
 	exit 0
 else
-	echo -e ">> Invalid Size: ${swap_size^^}. Exiting..."
+	echo -e ">> Invalid Size: ${swap_size^^}."
+	echo -e ""
+	echo -e "Exiting..."
 	exit 1
 fi
 
@@ -139,6 +143,7 @@ read -r -p "$ask_for_swapfile_name" swap_name
 if [ -z "${swap_name}" ]; then
 	swap_name="/swapfile"
 elif [[ "$swap_size" =~ [Qq][Uu][Ii][Tt] ]]; then
+	echo -e ""
 	echo -e ">> Exiting..."
 	exit 0
 elif [[ "$swap_name" =~ [/]+([0-9a-zA-Z]|[_-]) ]]; then
@@ -146,7 +151,9 @@ elif [[ "$swap_name" =~ [/]+([0-9a-zA-Z]|[_-]) ]]; then
 elif [[ "$swap_name" =~ [+([0-9a-zA-Z]|[_-])] ]]; then 
 	swap_name="/$swap_name"	
 else
-	echo -e ">> Invalid Pattern: $swap_name. Exiting..."
+	echo -e ">> Invalid Pattern: $swap_name."
+	echo -e ""
+	echo -e "Exiting..."
 	exit 1
 fi
 
@@ -180,6 +187,7 @@ case "$yes_no" in
 		echo -e ""
 		;;
 	n | no | quit | * )
+		echo -e ""
 		echo -e ">> Exiting..."
 		exit 0
 		;;
@@ -206,17 +214,21 @@ case "$yes_no" in
 				echo -e "$line"
 				;;
 			* )
+				echo -e ""
 				echo -e ">> Exiting..."
 				exit 0
 				;;
 		esac
 		;;
 	quit )
+		echo -e ""
 		echo -e ">> Exiting..."
 		exit 0	
 		;;
 	n | no | * )
+		echo -e ""
 		echo -e ">> 4. Created temp swapfile."
+		echo -e ""
 		echo -e ">> Exiting..."
 		exit 0
 		;;
