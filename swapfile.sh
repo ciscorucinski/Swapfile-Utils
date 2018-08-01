@@ -95,8 +95,7 @@ fi
 
 retry=true
 while "$retry"; do
-	echo -e -n ">>>> Are you sure you want to create a new swapfile? (Y / N):"
-	read -r yes_no
+	read -r -p ">>>> Are you sure you want to create a new swapfile? (Y / N):" yes_no 
 	case "$yes_no" in
 		[Yy]|[Yy][Ee][Ss] )
 
@@ -118,8 +117,7 @@ done
 
 echo -e ""
 echo -e ">> Step 1: Size Allocation"
-echo -e -n "$ask_for_size_allocation"
-read -r swap_size
+read -r -p "$ask_for_size_allocation" swap_size
 
 if [ -z "${swap_size}" ]; then
 	swap_size="4G"
@@ -135,8 +133,7 @@ fi
 
 echo -e ""
 echo -e ">> Step 2: File Name"
-echo -e -n "$ask_for_swapfile_name"
-read -r swap_name
+read -r -p "$ask_for_swapfile_name" swap_name
 
 if [ -z "${swap_name}" ]; then
 	swap_name="/swapfile"
@@ -153,8 +150,7 @@ else
 fi
 
 echo -e ""
-echo -e -n ">>>> Continue? '$swap_name' (${swap_size^^}) will be created. (Y / N):"
-read -r yes_no
+read -r -p ">>>> Continue? '$swap_name' (${swap_size^^}) will be created. (Y / N):" yes_no
 case "$yes_no" in
 	[Yy]|[Yy][Ee][Ss] )
 		echo -e""
@@ -188,8 +184,7 @@ case "$yes_no" in
 		;;
 esac
 
-echo -e -n ">>>> Make swapfile permanent? (Y / N):"
-read -r yes_no
+read -r -p ">>>> Make swapfile permanent? (Y / N):" yes_no
 
 case "$yes_no" in
 	[Yy]|[Yy][Ee][Ss] )
@@ -199,22 +194,21 @@ case "$yes_no" in
 		echo -e ""
 		echo -e ">> 4. Created permanent swapfile. Modified '/etc/fstab'"
 
-		echo -e -n ">>>> Do you want to view '/etc/fstab?' (Y / N):"
-			read -r yes_no
+		read -r -p ">>>> Do you want to view '/etc/fstab?' (Y / N):" yes_no
 
-			case "$yes_no" in
-				[Yy]|[Yy][Ee][Ss] )
-					
-					echo -e ""
-					echo -e "$line"
-					cat /etc/fstab 
-					echo -e "$line"
-					;;
-				*)
-					echo -e ">> Exiting..."
-					exit 0
-					;;
-			esac
+		case "$yes_no" in
+			[Yy]|[Yy][Ee][Ss] )
+				
+				echo -e ""
+				echo -e "$line"
+				cat /etc/fstab 
+				echo -e "$line"
+				;;
+			*)
+				echo -e ">> Exiting..."
+				exit 0
+				;;
+		esac
 		;;
 	[Qq][Uu][Ii][Tt] )
 		echo -e ">> Exiting..."
