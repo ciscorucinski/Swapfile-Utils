@@ -105,8 +105,10 @@ while "$retry"; do
 	case "$yes_no" in
 		y | yes )
 
-			echo -e "\n$line"
-			echo -e "Current Swapfiles:\n"
+			echo -e ""
+			echo -e "$line"
+			echo -e "Current Swapfiles:"
+			echo -e ""
 			swapon -s 
 			echo -e "$line"
 			retry=false
@@ -117,7 +119,8 @@ while "$retry"; do
 			exit 0
 			;;
 		* )
-			echo -e ">> Error: invalid response\n"
+			echo -e ">> Error: invalid response"
+			echo -e ""
 			retry=true
 	esac
 done
@@ -163,7 +166,7 @@ else
 fi
 
 echo -e ""
-read -r -p ">>>> Continue? '$swap_name' (${swap_size^^}) will be created. (Y / N):" yes_no
+read -r -p ">>>> Continue? '$swap_name' (${swap_size^^}) will be created. (Y / N) :" yes_no
 case "$yes_no" in
 	y | yes )
 		echo -e""
@@ -198,7 +201,7 @@ case "$yes_no" in
 		;;
 esac
 
-read -r -p ">>>> Make swapfile permanent? (Y / N):" yes_no
+read -r -p ">>>> Make swapfile permanent? (Y / N): " yes_no
 
 case "$yes_no" in
 	y | yes )
@@ -208,7 +211,7 @@ case "$yes_no" in
 		echo -e ""
 		echo -e ">> 4. Created permanent swapfile. Modified '/etc/fstab'"
 
-		read -r -p ">>>> Do you want to view '/etc/fstab?' (Y / N):" yes_no
+		read -r -p ">>>> Do you want to view '/etc/fstab?' (Y / N) :" yes_no
 
 		case "$yes_no" in
 			y | yes )
