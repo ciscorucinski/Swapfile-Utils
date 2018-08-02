@@ -4,7 +4,7 @@ help_text="Documentation:
 Creates a new swapfile
 
 Usage: 
-  $(basename "$0") [OPTIONS]
+  sudo $(basename "$0") [OPTIONS]
 
 Help Options:
   -h, --help		Display help message
