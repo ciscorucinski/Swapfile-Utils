@@ -66,6 +66,11 @@ ask_for_swapfile_name="
 
 line="# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #"
 
+if [ "$(id -u)" != 0 ]; then
+    echo "$0 must be run as root or with sudo (i.e. 'sudo $0')" >&2
+    exit 1
+fi
+
 shopt -s extglob
 shopt -s nocasematch
 
@@ -102,7 +107,7 @@ while "$retry"; do
 
 			echo -e "\n$line"
 			echo -e "Current Swapfiles:\n"
-			sudo swapon -s 
+			swapon -s 
 			echo -e "$line"
 			retry=false
 			;;
@@ -167,22 +172,22 @@ case "$yes_no" in
 		echo -e ""
 		echo -e "$line"
 
-		sudo fallocate -l "$swap_size" "$swap_name"
-		sudo chmod 600 "$swap_name"
-		sudo mkswap "$swap_name"
+		fallocate -l "$swap_size" "$swap_name"
+		chmod 600 "$swap_name"
+		mkswap "$swap_name"
 		
 		echo -e "$line"
 		echo -e ""
 
 		echo -e ">> 2. Enabling swapfile..."
-		sudo swapon "$swap_name"
+		swapon "$swap_name"
 
 		echo -e ">> 3. Swapfile added."
 		echo -e ""
 		echo -e "$line"
 		echo -e "Current Swapfiles:"
 		echo -e ""
-		sudo swapon -s 
+		swapon -s 
 		echo -e "$line"
 		echo -e ""
 		;;
@@ -198,7 +203,7 @@ read -r -p ">>>> Make swapfile permanent? (Y / N):" yes_no
 case "$yes_no" in
 	y | yes )
 
-		echo -e "$swap_name none swap sw 0 0" | sudo tee -a /etc/fstab > /dev/null
+		echo -e "$swap_name none swap sw 0 0" | tee -a /etc/fstab > /dev/null
 
 		echo -e ""
 		echo -e ">> 4. Created permanent swapfile. Modified '/etc/fstab'"
