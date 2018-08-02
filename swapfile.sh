@@ -125,7 +125,7 @@ if [ -z "${swap_size}" ]; then
 	swap_size="4G"
 elif [[ "$swap_size" =~ [1-9][0-9]*[mMgG] ]]; then
 	:
-elif [[ "$swap_size" =~ [Qq][Uu][Ii][Tt] ]]; then
+elif [[ "$swap_size" =~ quit ]]; then
 	echo -e ""
 	echo -e ">> Exiting..."
 	exit 0
@@ -142,7 +142,7 @@ read -r -p "$ask_for_swapfile_name" swap_name
 
 if [ -z "${swap_name}" ]; then
 	swap_name="/swapfile"
-elif [[ "$swap_size" =~ [Qq][Uu][Ii][Tt] ]]; then
+elif [[ "$swap_size" =~ quit ]]; then
 	echo -e ""
 	echo -e ">> Exiting..."
 	exit 0
